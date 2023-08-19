@@ -66,18 +66,21 @@ void performanceStatsOutput(int& frame, float& lastTime, float& timePassed)
 const char* vertexShaderSource =
 "#version 330 core\n"
 "layout (location = 0) in vec3 aPos;\n"
+"out vec4 vertexColor;\n"
 "void main()\n"
 "{\n"
 "	gl_Position = vec4(aPos.xyz, 1.0);\n"
+"	vertexColor = gl_Position;\n"
 "}\0";
 
 // Fragment shader source code
 const char* fragmentShaderSource =
 "#version 330 core\n"
 "out vec4 fragColor;\n"
+"in vec4 vertexColor;\n"
 "void main()\n"
 "{\n"
-"	fragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
+"	fragColor = vertexColor;\n"
 "}\0";
 
 int main()
