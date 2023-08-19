@@ -90,7 +90,12 @@ int main()
 	}
 
 	// Initial colors stored in vector
-	std::vector<float> clearColor {102.0f / 255.0f, 255.0f / 255.0f, 255.0f / 255.0f, 255.0f / 255.0f};
+	std::vector<float> clearColor {
+		102.0f / 255.0f, 
+		255.0f / 255.0f, 
+		255.0f / 255.0f, 
+		255.0f / 255.0f
+	};
 
 	// Vector of verticies
 	float vertices[]{
@@ -133,10 +138,10 @@ int main()
 	// Setting up vertex shader object
 	int success;
 	char infoLog[512];
-	unsigned int vertexShaderObj = glCreateShader(GL_VERTEX_SHADER); /* Creates a vertex shader object */
-	glShaderSource(vertexShaderObj, 1, &vertexShaderSource, NULL);	 /* Puts the source code into the vertex shader object */
-	glCompileShader(vertexShaderObj);								 /* Compiles the shader source code */
-	glGetShaderiv(vertexShaderObj, GL_COMPILE_STATUS, &success);     /* Gets compilation status */
+	unsigned int vertexShaderObj = glCreateShader(GL_VERTEX_SHADER); 
+	glShaderSource(vertexShaderObj, 1, &vertexShaderSource, NULL);	 
+	glCompileShader(vertexShaderObj);								 
+	glGetShaderiv(vertexShaderObj, GL_COMPILE_STATUS, &success);     
 
 	// Checks if vertex compilation was successful
 	if (!success)
@@ -151,10 +156,10 @@ int main()
 	}
 
 	// Setting up fragment shader object
-	unsigned int fragmentShaderObj = glCreateShader(GL_FRAGMENT_SHADER); /* Creates a fragment shader object */
-	glShaderSource(fragmentShaderObj, 1, &fragmentShaderSource, NULL);   /* Puts the source code into the fragment shader */
-	glCompileShader(fragmentShaderObj);									 /* Compiles the shader source code */
-	glGetShaderiv(fragmentShaderObj, GL_COMPILE_STATUS, &success);       /* Gets compilation status */
+	unsigned int fragmentShaderObj = glCreateShader(GL_FRAGMENT_SHADER); 
+	glShaderSource(fragmentShaderObj, 1, &fragmentShaderSource, NULL);   
+	glCompileShader(fragmentShaderObj);									 
+	glGetShaderiv(fragmentShaderObj, GL_COMPILE_STATUS, &success);       
 
 	// Checks if fragment compilation was successful
 	if (!success)
@@ -170,10 +175,10 @@ int main()
 
 	// Setting up a shader program object
 	unsigned int shaderProgramObj = glCreateProgram();
-	glAttachShader(shaderProgramObj, vertexShaderObj);	        /* Attaching the vertex shader to the shader program */
-	glAttachShader(shaderProgramObj, fragmentShaderObj);        /* Attaching the fragment shader to the shader program */
-	glLinkProgram(shaderProgramObj);                            /* Linking all shaders within the shader program */
-	glGetProgramiv(shaderProgramObj, GL_LINK_STATUS, &success); /* Gets linking status */
+	glAttachShader(shaderProgramObj, vertexShaderObj);	        
+	glAttachShader(shaderProgramObj, fragmentShaderObj);        
+	glLinkProgram(shaderProgramObj);                            
+	glGetProgramiv(shaderProgramObj, GL_LINK_STATUS, &success); 
 
 	// Checks if shader linking was successful
 	if (!success)
@@ -203,8 +208,8 @@ int main()
 	glBindVertexArray(vertexArrayObj);
 
 	// Binds vertex buffer and copies data into it
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObj);							   /* Binds the vertex buffer object to the context */
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW); /* Copies data into the vertex buffer object */
+	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObj);							   
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW); 
 
 	// Setting up the vertex attribute object which tells the shader how to read in the vertex data from the vertex buffer object
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
