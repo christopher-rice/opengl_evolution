@@ -68,7 +68,7 @@ const char* vertexShaderSource =
 "layout (location = 0) in vec3 aPos;\n"
 "void main()\n"
 "{\n"
-"	gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+"	gl_Position = vec4(aPos.xyz, 1.0);\n"
 "}\0";
 
 // Fragment shader source code
@@ -233,6 +233,11 @@ int main()
 
 	// Sets the swap interval
 	glfwSwapInterval(0);
+
+	// Getting the max number of vertex attributes
+	int maxAttributes;
+	glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &maxAttributes);
+	std::cout << "Max number of attributes suppoerted = " << maxAttributes << std ::endl;
 
 	// Looping while window close flag isn't set
 	while (!glfwWindowShouldClose(window))
