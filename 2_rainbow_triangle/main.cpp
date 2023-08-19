@@ -66,19 +66,38 @@ void performanceStatsOutput(int& frame, float& lastTime, float& timePassed)
 const char* vertexShaderSource =
 "#version 330 core\n"
 "layout (location = 0) in vec3 aPos;\n"
+"layout (location = 1) in vec3 aColor;\n"
+"out vec3 vertexColor;\n"
 "void main()\n"
 "{\n"
 "	gl_Position = vec4(aPos.xyz, 1.0);\n"
+"	vertexColor = aColor;\n"
 "}\0";
 
 // Fragment shader source code
 const char* fragmentShaderSource =
 "#version 330 core\n"
+"in vec3 vertexColor;\n"
 "out vec4 fragColor;\n"
-"uniform vec4 vertexColor;\n"
+"uniform float colorShift;\n"
 "void main()\n"
 "{\n"
-"	fragColor = vertexColor;\n"
+"	float newRed = vertexColor.x + colorShift;\n"
+"	float newGreen = vertexColor.y + colorShift;\n"
+"	float newBlue = vertexColor.z + colorShift;\n"
+"	if (newRed >= 1.0)\n"
+"	{\n"
+"		newRed = newRed - 1.0;\n"
+"	}\n"
+"	if (newGreen >= 1.0)\n"
+"	{\n"
+"		newGreen = newGreen - 1.0;\n"
+"	}\n"
+"	if (newBlue >= 1.0)\n"
+"	{\n"
+"		newBlue = newBlue - 1.0;\n"
+"	}\n"
+"	fragColor = vec4(newRed, newGreen, newBlue, 1.0);\n"
 "}\0";
 
 int main()
@@ -100,9 +119,9 @@ int main()
 
 	// Vector of verticies
 	float vertices[]{
-		 0.0f,  0.5f, 0.0f,
-		 0.5f, -0.5f, 0.0f,
-		-0.5f, -0.5f, 0.0f
+		 0.0f,  0.5f, 0.0f, 0.0f, 0.0f, 1.0f,
+		 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
+		-0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f
 	};
 
 	// Setting minimum version of OpenGL to use (3.3) and saying we want to use the core profile
@@ -212,9 +231,11 @@ int main()
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObj);							   
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW); 
 
-	// Setting up the vertex attribute object which tells the shader how to read in the vertex data from the vertex buffer object
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	// Setting up the vertex attribute pointer for position and color
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*) (3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
 
 	// We can unbind the VBO because the vertex attribute pointer is registered to it now
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -248,18 +269,17 @@ int main()
 		// Setting clear color and clearing color buffer
 		glClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
 		glClear(GL_COLOR_BUFFER_BIT);
-
+ 
 		// Changing RGB value with time
-		float red = sin(glfwGetTime()) * 0.5f + 0.5f;
-		float green = sin(glfwGetTime() * 2) * 0.5f + 0.5f;
-		float blue = sin(glfwGetTime() * 0.5) * 0.5f + 0.5f;
+		//float shift = sin(glfwGetTime()) * 0.5f + 0.5f;
+		float shift = 0.0f;
 
 		// Using the shader program
 		glUseProgram(shaderProgramObj);
 
 		// Getting location of vertex color uniform and setting values
-		int vertexColorIndex = glGetUniformLocation(shaderProgramObj, "vertexColor");
-		glUniform4f(vertexColorIndex, red, green, blue, 1.0f);
+		int vertexColorIndex = glGetUniformLocation(shaderProgramObj, "colorShift");
+		glUniform1f(vertexColorIndex, shift);
 
 		// Binding the vertex array and drawing triangle
 		glBindVertexArray(vertexArrayObj);
