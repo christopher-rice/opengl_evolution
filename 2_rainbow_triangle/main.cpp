@@ -66,18 +66,16 @@ void performanceStatsOutput(int& frame, float& lastTime, float& timePassed)
 const char* vertexShaderSource =
 "#version 330 core\n"
 "layout (location = 0) in vec3 aPos;\n"
-"out vec4 vertexColor;\n"
 "void main()\n"
 "{\n"
 "	gl_Position = vec4(aPos.xyz, 1.0);\n"
-"	vertexColor = gl_Position;\n"
 "}\0";
 
 // Fragment shader source code
 const char* fragmentShaderSource =
 "#version 330 core\n"
 "out vec4 fragColor;\n"
-"in vec4 vertexColor;\n"
+"uniform vec4 vertexColor;\n"
 "void main()\n"
 "{\n"
 "	fragColor = vertexColor;\n"
@@ -251,8 +249,19 @@ int main()
 		glClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		// Draws the triangles
+		// Changing RGB value with time
+		float red = sin(glfwGetTime()) * 0.5f + 0.5f;
+		float green = sin(glfwGetTime() * 2) * 0.5f + 0.5f;
+		float blue = sin(glfwGetTime() * 0.5) * 0.5f + 0.5f;
+
+		// Using the shader program
 		glUseProgram(shaderProgramObj);
+
+		// Getting location of vertex color uniform and setting values
+		int vertexColorIndex = glGetUniformLocation(shaderProgramObj, "vertexColor");
+		glUniform4f(vertexColorIndex, red, green, blue, 1.0f);
+
+		// Binding the vertex array and drawing triangle
 		glBindVertexArray(vertexArrayObj);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 
