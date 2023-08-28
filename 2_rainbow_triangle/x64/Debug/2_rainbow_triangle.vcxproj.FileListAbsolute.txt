@@ -1,3 +1,0 @@
-C:\Users\chris\OneDrive\Desktop\ActiveProjects\OpenGL Projects\opengl_evolution\2_rainbow_triangle\x64\Debug\2_rainbow_triangle.vcxproj.CopyComplete
-C:\Users\chris\OneDrive\Desktop\ActiveProjects\OpenGL Projects\opengl_evolution\2_rainbow_triangle\x64\Debug\2_rainbow_triangle.exe
-C:\Users\chris\OneDrive\Desktop\ActiveProjects\OpenGL Projects\opengl_evolution\2_rainbow_triangle\x64\Debug\glfw3.dll
