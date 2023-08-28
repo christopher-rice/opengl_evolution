@@ -1,6 +1,0 @@
-C:\Users\chris\OneDrive\Desktop\ActiveProjects\OpenGL Projects\opengl_evolution\2_rainbow_triangle\x64\Debug\2_rainbow_triangle.vcxproj.CopyComplete
-C:\Users\chris\OneDrive\Desktop\ActiveProjects\OpenGL Projects\opengl_evolution\2_rainbow_triangle\x64\Debug\glfw3.dll
-C:\Users\chris\OneDrive\Desktop\ActiveProjects\OpenGL Projects\opengl_evolution\2_rainbow_triangle\x64\Debug\3_textured_square.exe
-C:\Users\chris\OneDrive\Desktop\ActiveProjects\OpenGL Projects\opengl_evolution\3_textured_square\x64\Debug\2_rainbow_triangle.vcxproj.CopyComplete
-C:\Users\chris\OneDrive\Desktop\ActiveProjects\OpenGL Projects\opengl_evolution\3_textured_square\x64\Debug\3_textured_square.exe
-C:\Users\chris\OneDrive\Desktop\ActiveProjects\OpenGL Projects\opengl_evolution\3_textured_square\x64\Debug\glfw3.dll

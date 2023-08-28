@@ -30,3 +30,6 @@
 *.exe
 *.out
 *.app
+
+# Weird VS stuff
+*.opendb
