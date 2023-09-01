@@ -12,6 +12,7 @@
 int screenWidth = 800;
 int screenHeight = 800;
 float speedRot = 0.5f / 1000.0f;
+float speedScale = 0.5f / 1000.0f;
 float smileCount = 1.0f;
 float blend = 0.2f;
 float redFilter = 1.0f;
@@ -20,6 +21,8 @@ float blueFilter = 1.0f;
 bool bUseColor = false;
 bool bTurnRight = false;
 bool bTurnLeft = false;
+bool bScaleUp = false;
+bool bScaleDown = false;
 
 static void errorCallback(int error, const char* description)
 {
@@ -136,6 +139,26 @@ static void windowKeyCallback(GLFWwindow* window, int key, int scancode, int act
 	else if ((key == GLFW_KEY_A) && (action == GLFW_RELEASE))
 	{
 		bTurnLeft = false;
+	}
+
+	// Check if user presses w key
+	if ((key == GLFW_KEY_W) && ((action == GLFW_PRESS) || (action == GLFW_REPEAT)))
+	{
+		bScaleUp = true;
+	}
+	else if ((key == GLFW_KEY_W) && (action == GLFW_RELEASE))
+	{
+		bScaleUp = false;
+	}
+
+	// Check if user presses s key
+	if ((key == GLFW_KEY_S) && ((action == GLFW_PRESS) || (action == GLFW_REPEAT)))
+	{
+		bScaleDown = true;
+	}
+	else if ((key == GLFW_KEY_S) && (action == GLFW_RELEASE))
+	{
+		bScaleDown = false;
 	}
 }
 
@@ -370,6 +393,7 @@ int main()
 	std::cout << "Max number of attributes suppoerted = " << maxAttributes << std::endl;
 
 	float currRot = 0.0f;
+	float currScale = 1.0f;
 
 	// Looping while window close flag isn't set
 	while (!glfwWindowShouldClose(window))
@@ -385,12 +409,22 @@ int main()
 			currRot += speedRot * timePassed;
 		}
 
+		// Applying scale with input
+		if (bScaleUp)
+		{
+			currScale += speedScale * timePassed;
+		}
+
+		if (bScaleDown)
+		{
+			currScale -= speedScale * timePassed;
+		}
 
 		// Creating transformation matrix (scales by 0.5, rotates 90 degrees, then translates)
 		glm::mat4 transMat(1.0f);
 		//transMat = glm::translate(transMat, glm::vec3(0.25f, 0.25f, 0.0f));
 		transMat = glm::rotate(transMat, currRot, glm::vec3(0.0f, 0.0f, 1.0f));
-		//transMat = glm::scale(transMat, glm::vec3(0.5f, 0.5f, 0.5f));
+		transMat = glm::scale(transMat, glm::vec3(currScale, currScale, currScale));
 
 		// START RENDERING
 
