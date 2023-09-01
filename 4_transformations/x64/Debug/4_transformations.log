@@ -1,7 +1,5 @@
 ﻿  main.cpp
-C:\Users\chris\OneDrive\Desktop\ActiveProjects\OpenGL Projects\opengl_evolution\4_transformations\main.cpp(57,16): warning C4305: '-=': truncation from 'double' to 'float'
-C:\Users\chris\OneDrive\Desktop\ActiveProjects\OpenGL Projects\opengl_evolution\4_transformations\main.cpp(66,16): warning C4305: '+=': truncation from 'double' to 'float'
-C:\Users\chris\OneDrive\Desktop\ActiveProjects\OpenGL Projects\opengl_evolution\4_transformations\main.cpp(128,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-  stb_image.cpp
-  Generating Code...
+C:\Users\chris\OneDrive\Desktop\ActiveProjects\OpenGL Projects\opengl_evolution\4_transformations\main.cpp(60,16): warning C4305: '-=': truncation from 'double' to 'float'
+C:\Users\chris\OneDrive\Desktop\ActiveProjects\OpenGL Projects\opengl_evolution\4_transformations\main.cpp(69,16): warning C4305: '+=': truncation from 'double' to 'float'
+C:\Users\chris\OneDrive\Desktop\ActiveProjects\OpenGL Projects\opengl_evolution\4_transformations\main.cpp(131,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   4_transformations.vcxproj -> C:\Users\chris\OneDrive\Desktop\ActiveProjects\OpenGL Projects\opengl_evolution\4_transformations\x64\Debug\4_transformations.exe
