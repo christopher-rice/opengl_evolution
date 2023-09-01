@@ -6,8 +6,8 @@
 #include "shader.h"
 #include "stb_image.h"
 
-int screenWidth = 640;
-int screenHeight = 480;
+int screenWidth = 800;
+int screenHeight = 800;
 float smileCount = 1.0f;
 float blend = 0.2f;
 float redFilter = 1.0f;
