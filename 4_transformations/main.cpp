@@ -11,12 +11,15 @@
 
 int screenWidth = 800;
 int screenHeight = 800;
+float speedRot = 0.5f / 1000.0f;
 float smileCount = 1.0f;
 float blend = 0.2f;
 float redFilter = 1.0f;
 float greenFilter = 1.0f;
 float blueFilter = 1.0f;
 bool bUseColor = false;
+bool bTurnRight = false;
+bool bTurnLeft = false;
 
 static void errorCallback(int error, const char* description)
 {
@@ -41,19 +44,19 @@ static void windowKeyCallback(GLFWwindow* window, int key, int scancode, int act
 	}
 
 	// Checks if user presses up arrow key
-	if ((key == GLFW_KEY_UP) && (action == GLFW_TRUE))
+	if ((key == GLFW_KEY_UP) && (action == GLFW_PRESS))
 	{
 		smileCount += 1.0f;
 	}
 
 	// Checks if user presses down arrow key
-	if ((key == GLFW_KEY_DOWN) && (action == GLFW_TRUE))
+	if ((key == GLFW_KEY_DOWN) && (action == GLFW_PRESS))
 	{
 		smileCount -= 1.0f;
 	}
 
 	// Checks if user presses left arrow key
-	if ((key == GLFW_KEY_LEFT) && (action == GLFW_TRUE))
+	if ((key == GLFW_KEY_LEFT) && (action == GLFW_PRESS))
 	{
 		if ((blend - 0.01f) >= 0.0f)
 		{
@@ -62,7 +65,7 @@ static void windowKeyCallback(GLFWwindow* window, int key, int scancode, int act
 	}
 
 	// Checks if user presses right arrow key
-	if ((key == GLFW_KEY_RIGHT) && (action == GLFW_TRUE))
+	if ((key == GLFW_KEY_RIGHT) && (action == GLFW_PRESS))
 	{
 		if ((blend + 0.01f) <= 1.0f)
 		{
@@ -71,7 +74,7 @@ static void windowKeyCallback(GLFWwindow* window, int key, int scancode, int act
 	}
 
 	// Checks if user presses z key
-	if ((key == GLFW_KEY_Z) && (action == GLFW_TRUE))
+	if ((key == GLFW_KEY_Z) && (action == GLFW_PRESS))
 	{
 		if (redFilter == 1.0f)
 		{
@@ -84,7 +87,7 @@ static void windowKeyCallback(GLFWwindow* window, int key, int scancode, int act
 	}
 
 	// Checks if user presses x key
-	if ((key == GLFW_KEY_X) && (action == GLFW_TRUE))
+	if ((key == GLFW_KEY_X) && (action == GLFW_PRESS))
 	{
 		if (greenFilter == 1.0f)
 		{
@@ -97,7 +100,7 @@ static void windowKeyCallback(GLFWwindow* window, int key, int scancode, int act
 	}
 
 	// Checks if user presses c key
-	if ((key == GLFW_KEY_C) && (action == GLFW_TRUE))
+	if ((key == GLFW_KEY_C) && (action == GLFW_PRESS))
 	{
 		if (blueFilter == 1.0f)
 		{
@@ -110,9 +113,29 @@ static void windowKeyCallback(GLFWwindow* window, int key, int scancode, int act
 	}
 
 	// Checks if user presses space bar
-	if ((key == GLFW_KEY_SPACE) && (action == GLFW_TRUE))
+	if ((key == GLFW_KEY_SPACE) && (action == GLFW_PRESS))
 	{
 		bUseColor = !bUseColor;
+	}
+
+	// Check if user presses d key
+	if ((key == GLFW_KEY_D) && ((action == GLFW_PRESS) || (action == GLFW_REPEAT)))
+	{
+		bTurnRight = true;
+	}
+	else if ((key == GLFW_KEY_D) && (action == GLFW_RELEASE))
+	{
+		bTurnRight = false;
+	}
+
+	// Check if user presses a key
+	if ((key == GLFW_KEY_A) && ((action == GLFW_PRESS) || (action == GLFW_REPEAT)))
+	{
+		bTurnLeft = true;
+	}
+	else if ((key == GLFW_KEY_A) && (action == GLFW_RELEASE))
+	{
+		bTurnLeft = false;
 	}
 }
 
@@ -184,12 +207,6 @@ int main()
 		0, 1, 3,
 		1, 2, 3
 	};
-
-	// Creating transformation matrix (scales by 2, rotates 90 degrees, then translates)
-	glm::mat4 transMat(1.0f);
-	transMat = glm::translate(transMat, glm::vec3(1.0f, 1.0f, 0.0f));
-	transMat = glm::rotate(transMat, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-	transMat = glm::scale(transMat, glm::vec3(2.0f, 2.0f, 2.0f));
 
 	// Initiating glfw
 	if (!glfwInit())
@@ -352,9 +369,29 @@ int main()
 	glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &maxAttributes);
 	std::cout << "Max number of attributes suppoerted = " << maxAttributes << std::endl;
 
+	float currRot = 0.0f;
+
 	// Looping while window close flag isn't set
 	while (!glfwWindowShouldClose(window))
 	{
+		// Applying rotation with input
+		if (bTurnRight)
+		{
+			currRot -= speedRot * timePassed;
+		}
+
+		if (bTurnLeft)
+		{
+			currRot += speedRot * timePassed;
+		}
+
+
+		// Creating transformation matrix (scales by 0.5, rotates 90 degrees, then translates)
+		glm::mat4 transMat(1.0f);
+		//transMat = glm::translate(transMat, glm::vec3(0.25f, 0.25f, 0.0f));
+		transMat = glm::rotate(transMat, currRot, glm::vec3(0.0f, 0.0f, 1.0f));
+		//transMat = glm::scale(transMat, glm::vec3(0.5f, 0.5f, 0.5f));
+
 		// START RENDERING
 
 		// Setting clear color and clearing color buffer
@@ -377,6 +414,10 @@ int main()
 		triangleShader.setFloat("greenFilter", greenFilter);
 		triangleShader.setFloat("blueFilter", blueFilter);
 		triangleShader.setBool("bUseColor", bUseColor);
+
+		// Setting matrix uniform
+		unsigned int transMatLoc = glGetUniformLocation(triangleShader.ID, "transMat");
+		glUniformMatrix4fv(transMatLoc, 1, GL_FALSE, glm::value_ptr(transMat));
 
 		// Binding the vertex array and drawing triangle
 		glBindVertexArray(vertexArrayObj);
