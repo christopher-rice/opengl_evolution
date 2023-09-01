@@ -1,3 +1,0 @@
-C:\Users\chris\OneDrive\Desktop\ActiveProjects\OpenGL Projects\opengl_evolution\3_textured_square\x64\Debug\3_textured_square.vcxproj.CopyComplete
-C:\Users\chris\OneDrive\Desktop\ActiveProjects\OpenGL Projects\opengl_evolution\3_textured_square\x64\Debug\3_textured_square.exe
-C:\Users\chris\OneDrive\Desktop\ActiveProjects\OpenGL Projects\opengl_evolution\3_textured_square\x64\Debug\glfw3.dll

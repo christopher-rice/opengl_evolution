@@ -1,5 +1,0 @@
-﻿  main.cpp
-C:\Users\chris\OneDrive\Desktop\ActiveProjects\OpenGL Projects\opengl_evolution\3_textured_square\main.cpp(57,16): warning C4305: '-=': truncation from 'double' to 'float'
-C:\Users\chris\OneDrive\Desktop\ActiveProjects\OpenGL Projects\opengl_evolution\3_textured_square\main.cpp(66,16): warning C4305: '+=': truncation from 'double' to 'float'
-C:\Users\chris\OneDrive\Desktop\ActiveProjects\OpenGL Projects\opengl_evolution\3_textured_square\main.cpp(128,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-  3_textured_square.vcxproj -> C:\Users\chris\OneDrive\Desktop\ActiveProjects\OpenGL Projects\opengl_evolution\3_textured_square\x64\Debug\3_textured_square.exe
