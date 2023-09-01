@@ -171,6 +171,8 @@ int main()
 
 	// Creating a translation matrix
 	transMat = glm::translate(transMat, glm::vec3(1.0f, 1.0f, 0.0f));
+	transMat = glm::rotate(transMat, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	transMat = glm::scale(transMat, glm::vec3(2.0f, 2.0f, 2.0f));
 
 	// Translating the position with the translation matrix
 	glm::vec4 pos2 = transMat * pos1;
